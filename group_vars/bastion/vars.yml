@@ -1,0 +1,60 @@
+network_interfaces:
+- description: Main network
+  interface: eth0
+  address: 192.168.1.3/24
+  gateway: 192.168.1.1
+  dns_servers: 192.168.1.1
+- description: Guest VLAN
+  interface: eth0.2
+  address: 192.168.2.3/24
+  gateway: 192.168.2.1
+  dns_servers: 192.168.2.1
+- description: IoT VLAN
+  interface: eth0.3
+  address: 192.168.3.3/24
+  gateway: 192.168.3.1
+  dns_servers: 192.168.3.1
+- description: VPN VLAN
+  interface: eth0.4
+  address: 192.168.4.3/24
+  gateway: 192.168.4.1
+  dns_servers: 192.168.4.1
+- description: VoIP VLAN
+  interface: eth0.5
+  address: 192.168.5.3/24
+  gateway: 192.168.5.1
+  dns_servers: 192.168.5.1
+- description: Management VLAN
+  interface: eth0.100
+  address: 192.168.100.3/24
+  gateway: 192.168.100.1
+  dns_servers: 192.168.100.1
+network_vpn_vlan_gateway: "{{ network_interfaces[3].gateway }}"
+network_vpn_vlan_network: "{{ network_interfaces[3].address | ipsubnet(network_interfaces[3].address | ipaddr('host/prefix') | ipaddr('prefix')) }}"
+
+nfs_mount_path: /mnt/nas/download
+nfs_source: 192.168.1.2:/Download
+nfs_options: rsize=8192,wsize=8192,timeo=14,intr
+
+transmission_download: "{{ nfs_mount_path }}/Transmission"
+transmission_settings:
+- key: bind-address-ipv4
+  value: 192.168.4.3
+- key: download-dir
+  value: "{{ transmission_download }}"
+- key: incomplete-dir
+  value: "{{ transmission_download }}/Incomplete"
+- key: peer-port-random-on-start
+  value: 'false'
+- key: port-forwarding-enabled
+  value: 'false'
+- key: rpc-authentication-required
+  value: 'true'
+- key: rpc-password
+  value: 'transmission'
+- key: rpc-username
+  value: transmission
+- key: rpc-whitelist
+  value: 127.0.0.1,192.168.1.*,94.125.199.30
+- key: rpc-whitelist-enabled
+  value: 'true'

@@ -1,0 +1,17 @@
+---
+- name: Network | sttatic IP assignment
+  template:
+    src: dhcpcd.conf.j2
+    dest: /etc/dhcpcd.conf
+
+- name: Network | create VPN route table
+  copy:
+    dest: /etc/iproute2/rt_tables.d/vpn.conf
+    content: '200 vlanvpn'
+
+- name: Network | add VPN routes
+  copy:
+    dest: /lib/dhcpcd/dhcpcd-hooks/40-vpnroute
+    content: |
+      ip route add table vlanvpn default via {{ vpn_vlan_gateway }}
+      ip rule add from {{ vpn_vlan_network }} lookup vlanvpn

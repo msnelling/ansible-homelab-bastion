@@ -1,0 +1,47 @@
+---
+- name: install packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  loop:
+  - transmission-common
+  - transmission-daemon
+  - transmission-cli
+
+- name: ensure service not running
+  systemd:
+    name: transmission-daemon.service
+    state: stopped
+
+- name: update config settings
+  lineinfile:
+    path: /etc/transmission-daemon/settings.json
+    regexp: '^(\s+"{{ item.key }}"):\s+"(.*)"(,?)$'
+    line: '\1: "{{ item.value }}"\3'
+    backrefs: yes
+  loop: "{{ settings }}"
+
+- name: ensure download directory exists
+  file:
+    path: "{{ download_path }}"
+    state: directory
+    owner: debian-transmission
+    group: debian-transmission
+    mode: 0775
+
+- name: override systemd service settings
+  template:
+    src: override.conf.j2
+    dest: /etc/systemd/system/transmission-daemon.service.d/override.conf
+  register: transmission_service
+
+- name: reload systemd daemon
+  systemd:
+    daemon_reload: yes
+  when: transmission_service.changed
+
+- name: ensure service is running
+  systemd:
+    name: transmission-daemon.service
+    state: started

@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+
+[Unit]
+RequiresMountsFor={{ transmission_download }}
+
+[Service]
+TimeoutStartup=300s
