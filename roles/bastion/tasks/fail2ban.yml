@@ -1,0 +1,12 @@
+---
+- name: Fail2Ban | install package
+  apt:
+    name: fail2ban
+    state: latest
+    update_cache: yes
+
+- name: Fail2Ban | ensure service is running
+  systemd:
+    name: fail2ban.service
+    enabled: yes
+    state: started
