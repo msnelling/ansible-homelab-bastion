@@ -1,5 +1,5 @@
 ---
-- hosts: bastion
+- hosts: bastion.bakedbeans.com
   become: true
   tasks:
   - include_role:
