@@ -3,6 +3,9 @@
   template:
     src: dhcpcd.conf.j2
     dest: /etc/dhcpcd.conf
+  notify:
+  - restart system
+  - wait for system restart
 
 - name: Network | create VPN route table
   copy:
@@ -15,3 +18,6 @@
     content: |
       ip route add table vlanvpn default via {{ vpn_vlan_gateway }}
       ip rule add from {{ vpn_vlan_network }} lookup vlanvpn
+  notify:
+  - restart system
+  - wait for system restart

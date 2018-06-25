@@ -1,0 +1,10 @@
+---
+- name: restart system
+  shell: shutdown -r +0 'Ansible Reboot triggered'
+  async: 1
+  poll: 0
+  ignore_errors: true
+  when: false # Don't do this
+
+- name: wait for system restart
+  wait_for_connection:
