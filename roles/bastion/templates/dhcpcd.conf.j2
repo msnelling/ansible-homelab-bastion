@@ -31,6 +31,9 @@ slaac private
 # DNS servers
 static domain_name_servers={{ dns_servers }}
 
+# Domain domain_search
+static domain_name=local
+
 {% for item in interfaces %}
 interface {{ item.interface }}
   static ip_address={{ item.address }}

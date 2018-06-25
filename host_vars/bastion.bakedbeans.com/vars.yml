@@ -1,3 +1,5 @@
+ansible_become_pass: "{{ vault_ansible_become_pass }}"
+
 network_interfaces:
 - description: Main network
   interface: eth0

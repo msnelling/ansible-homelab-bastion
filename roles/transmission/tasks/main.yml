@@ -13,8 +13,8 @@
   - transmission-cli
 
 - name: ensure service not running
-  systemd:
-    name: transmission-daemon.service
+  service:
+    name: transmission-daemon
     state: stopped
 
 - name: update config settings
@@ -45,6 +45,6 @@
   when: transmission_service.changed
 
 - name: ensure service is running
-  systemd:
-    name: transmission-daemon.service
+  service:
+    name: transmission-daemon
     state: started

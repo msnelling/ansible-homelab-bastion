@@ -6,7 +6,7 @@
     update_cache: yes
 
 - name: Fail2Ban | ensure service is running
-  systemd:
-    name: fail2ban.service
+  service:
+    name: fail2ban
     enabled: yes
     state: started
