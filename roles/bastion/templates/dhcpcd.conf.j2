@@ -28,11 +28,13 @@ require dhcp_server_identifier
 # Generate Stable Private IPv6 Addresses instead of hardware based ones
 slaac private
 
+# DNS servers
+static domain_name_servers={{ dns_servers }}
+
 {% for item in interfaces %}
 interface {{ item.interface }}
-static ip_address={{ item.address }}
-static routers={{ item.gateway }}
-static domain_name_servers={{ item.dns_servers }}
+  static ip_address={{ item.address }}
+  static routers={{ item.gateway }}
 
 {% endfor %}
 

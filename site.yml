@@ -6,6 +6,8 @@
       name: bastion
     vars:
       interfaces: "{{ network_interfaces }}"
+      dns_servers: "{{ network_dns_servers }}"
+      vpn_vlan_interface: "{{ network_vpn_vlan_interface }}"
       vpn_vlan_gateway: "{{ network_vpn_vlan_gateway }}"
       vpn_vlan_network: "{{ network_vpn_vlan_network }}"
 

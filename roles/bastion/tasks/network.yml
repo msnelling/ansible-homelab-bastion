@@ -16,8 +16,10 @@
   copy:
     dest: /lib/dhcpcd/dhcpcd-hooks/40-vpnroute
     content: |
-      ip route add table vlanvpn default via {{ vpn_vlan_gateway }}
-      ip rule add from {{ vpn_vlan_network }} lookup vlanvpn
+      if [ "$interface" = "{{ vpn_vlan_interface }}" ]; then
+        ip route add table vlanvpn default via {{ vpn_vlan_gateway }}
+        ip rule add from {{ vpn_vlan_network }} lookup vlanvpn
+      fi
   notify:
   - restart system
   - wait for system restart
