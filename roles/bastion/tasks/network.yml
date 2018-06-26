@@ -1,5 +1,5 @@
 ---
-- name: Network | sttatic IP assignment
+- name: Network | static IP assignment
   template:
     src: dhcpcd.conf.j2
     dest: /etc/dhcpcd.conf
