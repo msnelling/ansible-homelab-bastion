@@ -1,0 +1,21 @@
+---
+- name: Unattended Upgrades | install packages
+  apt:
+    name: unattended-upgrades
+    state: present
+
+- name: Unattended Upgrades | periodic cache updates
+  copy:
+    src: 20auto-upgrades
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+
+- name: Unattended Upgrades | update config
+  lineinfile:
+    path: /etc/apt/apt.conf.d/50unattended-upgrades
+    regexp: '^.*{{ item.key }}\s+.*$'
+    line: '{{ item.key }} "{{ item.value }}";'
+  loop:
+  - key: Unattended-Upgrade::Automatic-Reboot
+    value: 'true'
+  - key: Unattended-Upgrade::Automatic-Reboot-Time
+    value: '02:00'

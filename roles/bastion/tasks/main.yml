@@ -1,4 +1,5 @@
 ---
+- include_tasks: unattended-upgrades.yml
 - include_tasks: fail2ban.yml
 - include_tasks: ssh.yml
 - include_tasks: network.yml
