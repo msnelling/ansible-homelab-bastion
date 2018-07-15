@@ -24,8 +24,8 @@ network_interfaces:
   gateway: 10.1.5.1
 - description: Management VLAN
   interface: eth0.100
-  address: 10.1.100.3/24
-  gateway: 10.1.100.1
+  address: 10.1.0.3/24
+  gateway: 10.1.0.1
 network_dns_servers: 192.168.1.1
 network_vpn_vlan_interface: "{{ network_interfaces[3].interface }}"
 network_vpn_vlan_address: "{{ network_interfaces[3].address }}"
