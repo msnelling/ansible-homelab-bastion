@@ -16,8 +16,8 @@ network_interfaces:
   gateway: 10.1.3.1
 - description: VPN VLAN
   interface: eth0.4
-  address: 192.168.4.3/24
-  gateway: 192.168.4.1
+  address: 10.1.4.3/24
+  gateway: 10.1.4.1
 - description: VoIP VLAN
   interface: eth0.5
   address: 10.1.5.3/24
@@ -39,7 +39,7 @@ nfs_options: rsize=8192,wsize=8192,timeo=14,intr
 transmission_download: "{{ nfs_mount_path }}/Transmission"
 transmission_settings:
 - key: bind-address-ipv4
-  value: 192.168.4.3
+  value: 10.1.4.3
 - key: download-dir
   value: "{{ transmission_download }}"
 - key: incomplete-dir
