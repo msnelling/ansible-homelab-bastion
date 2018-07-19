@@ -36,8 +36,11 @@ static domain_name=local
 
 {% for item in interfaces %}
 interface {{ item.interface }}
-  static ip_address={{ item.address }}
-  static routers={{ item.gateway }}
+  static ip_address={{ item.ipv4_address }}
+  static routers={{ item.ipv4_gateway }}
+{% if item.ipv6_pd is defined %}
+  ia_pd {{ item.ipv6_pd }} {{ item.interface }}
+{% endif %}
 
 {% endfor %}
 
