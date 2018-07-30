@@ -1,2 +1,3 @@
 #!/bin/bash
-ansible-playbook --inventory=hosts.yml --vault-password-file=.vault_pass site.yml
+set -e
+ansible-playbook --inventory=hosts.yml --vault-password-file=.vault_pass site.yml "$@"

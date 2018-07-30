@@ -2,7 +2,7 @@
 - hosts: bastion.bakedbeans.com
   become: true
   tasks:
-  - include_role:
+  - import_role:
       name: bastion
     vars:
       interfaces: "{{ network_interfaces }}"
@@ -10,16 +10,19 @@
       vpn_vlan_interface: "{{ network_vpn_vlan_interface }}"
       vpn_vlan_ipv4_gateway: "{{ network_vpn_vlan_ipv4_gateway }}"
       vpn_vlan_ipv4_network: "{{ network_vpn_vlan_ipv4_network }}"
+    tags: [bastion]
 
-  - include_role:
+  - import_role:
       name: nfs_mount
     vars:
       mount_path: "{{ nfs_mount_path }}"
       source: "{{ nfs_source }}"
       options: "{{ nfs_options }}"
+    tags: [nfs]
 
-  - include_role:
+  - import_role:
       name: transmission
     vars:
       download_path: "{{ transmission_download }}"
       settings: "{{ transmission_settings }}"
+    tags: [transmission]

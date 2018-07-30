@@ -1,4 +1,12 @@
 ---
+- name: Network | internface configuration
+  template: 
+    src: interfaces.j2
+    dest: /etc/network/interfaces
+  notify:
+  - restart system
+  - wait for system restart
+
 - name: Network | static IP assignment
   template:
     src: dhcpcd.conf.j2

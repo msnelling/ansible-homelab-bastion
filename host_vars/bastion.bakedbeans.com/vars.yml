@@ -5,7 +5,7 @@ network_interfaces:
   interface: eth0
   ipv4_address: 192.168.1.3/24
   ipv4_gateway: 192.168.1.1
-  ipv6_pd: 1
+  ipv6_pd: 0
 - description: Guest VLAN
   interface: eth0.2
   ipv4_address: 10.1.2.3/24
@@ -26,7 +26,7 @@ network_interfaces:
   interface: eth0.100
   ipv4_address: 10.1.0.3/24
   ipv4_gateway: 10.1.0.1
-  ipv6_pd: 0
+  ipv6_pd: 1
 network_dns_servers: 192.168.1.1
 network_vpn_vlan_interface: "{{ network_interfaces[3].interface }}"
 network_vpn_vlan_ipv4_address: "{{ network_interfaces[3].ipv4_address }}"

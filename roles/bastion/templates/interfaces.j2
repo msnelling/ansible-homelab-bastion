@@ -1,0 +1,19 @@
+# {{ ansible_managed }}
+
+# interfaces(5) file used by ifup(8) and ifdown(8)
+
+# Please note that this file is written to be used with dhcpcd
+# For static IP, consult /etc/dhcpcd.conf and 'man dhcpcd.conf'
+
+# Include files from /etc/network/interfaces.d:
+source-directory /etc/network/interfaces.d
+
+{% for item in interfaces %}
+# {{ item.description }}
+auto {{ item.interface }}
+iface {{ item.interface }} inet manual
+{% if item.ipv6_pd is defined %}
+iface {{ item.interface }} inet6 auto
+{% endif %}
+
+{% endfor %}
