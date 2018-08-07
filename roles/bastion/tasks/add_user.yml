@@ -1,0 +1,21 @@
+---
+- name: Add User | generate encrypted password
+  shell: echo '{{ _add_user.password }}' | mkpasswd --method=sha-512 --stdin --salt='{{ inventory_hostname | hash('sha1') | truncate(16) }}'
+  register: encrypted_password
+
+- name: Add User | create the user '{{ _add_user.username }}'
+  user:
+    name: "{{ _add_user.username }}"
+    password: "{{ encrypted_password.stdout_lines[0] }}"
+    groups: "{{ _add_user.groups }}"
+    append: yes
+    shell: "{{ _add_user.shell }}"
+    skeleton: /etc/skel
+    state: present
+
+- name: Add User | add the users authorized SSH keys
+  authorized_key:
+    user: "{{ _add_user.username }}"
+    key: "{{ item }}"
+    state: present
+  loop: "{{ _add_user.authorized_keys }}"

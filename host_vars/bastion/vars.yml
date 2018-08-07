@@ -1,0 +1,68 @@
+ansible_user: "{{ vault_provisioning_username }}"
+ansible_become_pass: "{{ vault_provisioning_password }}"
+
+bastion_users:
+- username: mark
+  password: "{{ vault_user_mark_password }}"
+  shell: /bin/bash
+  groups:
+  - sudo
+  authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6Tvl6E1eMdyvazTIRH3eA2qUqTn5lR7pVdWpQQeVT4sBxzN273XqPvxznmVBMxo0QSWYqLPWVLcygmUo/ZYcEOJBgpdDrX71km3iyEp07TMGJzpSJ6Ioy1HHK3P8G+XCESX6SxJS4XrD/IIM9MBL5yAjrjU8lmqQ5s4/y8LLzsTrPiSU3aFaFWRaRUmFSx07zq78pp+B+vVOvM4CC/uaASQbbIz+zfGlIDsOHXjUmYmZVpnHgQMbXldy+ftEGDwqZcFcJOqgEGEMe9+BILh24NuKq8jj6uHXlGw1hoXHn8FPUZ09yMnE5Z+PGgjWqDZa6BOxdcgo/I68l8Jj9pWRH mark@bakedbeans.com
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDa6fSgQbUI2fSj7knUKEjHTPeeEBO6+f2wayFuny5DK3X1SfF5/9iyHwBYbfkgCoA69a54hVaKvmlHMt1OTeU9lJLS20RFG3xUjrgnbVPJW6VqzbymkgbChAtyoZCPoQAMUUQXbob7bK/kIMb9+1SfTghiEuhTD96YWGG4GstJIOZbGXKfTOod5prvzrNTus/ggkNp72uk8BoIQdFglS2ZO6aWWud6EVbvJHFr/avVeZMK4iEHic56Hy+IFWjnty24c5634AvHVxzMKvcl2ezZomRKaJjuP+GNdBu9O6pwfhBsELpGe/Bh+Bg9nUgeOV2LTIiZ0ZbYGThBg+a6a6mV mark@MacBook-Pro.local
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjunBoGmn0JEmEb/wgNP3+uX9mdhIqhKOzdcdVvsXm/qskmka/au6doCpHIZo9GNb0c3WmFaTDja1dZuU624aJGaHyNNoBrzUjZRr2VzjtmW8Ho85A4/iLmn1Vu+CmBMoDn/BNC1Zb2PWGX451FngrH6ir1Z4yeAqLJS4o/mEh9EReqfv4LPUxgoKtHZw3M31HHYPRMGk0ohXbKT2yuiqvfT88fx1hvY+diGHBZOdam7AR9DH5L1ntv0Hvl2jRaAKe2EKY+lqkCw16Vk7FZEwOodkyZL37lh6zh5iLe5jbUSBjf9gG5XwFLh0hWTG2rAiP5iDHVir4JhrES9clBcZt cardno:000604944324
+
+network_interfaces:
+- description: Main network
+  interface: eth0
+  ipv4_address: 192.168.1.3/24
+  ipv4_gateway: 192.168.1.1
+  ipv6_pd: 0
+- description: Guest VLAN
+  interface: eth0.2
+  ipv6_pd: 2
+- description: IoT VLAN
+  interface: eth0.3
+  ipv6_pd: 3
+- description: VPN VLAN
+  interface: eth0.4
+  ipv4_address: 10.1.4.3/24
+  ipv4_gateway: 10.1.4.1
+- description: VoIP VLAN
+  interface: eth0.5
+  ipv6_pd: 5
+- description: Management VLAN
+  interface: eth0.100
+  ipv6_pd: 1
+network_dns_servers: 192.168.1.1
+network_vpn_vlan_interface: "{{ network_interfaces[3].interface }}"
+network_vpn_vlan_ipv4_address: "{{ network_interfaces[3].ipv4_address }}"
+network_vpn_vlan_ipv4_gateway: "{{ network_interfaces[3].ipv4_gateway }}"
+network_vpn_vlan_ipv4_network: "{{ network_vpn_vlan_ipv4_address | ipaddr('subnet') }}"
+
+nfs_mount_path: /mnt/nas/download
+nfs_source: 192.168.1.2:/Download
+nfs_options: rsize=8192,wsize=8192,timeo=14,intr
+
+transmission_download: "{{ nfs_mount_path }}/Transmission"
+transmission_settings:
+- key: bind-address-ipv4
+  value: "{{ network_vpn_vlan_ipv4_address | ipaddr('address') }}"
+- key: download-dir
+  value: "{{ transmission_download }}"
+- key: incomplete-dir
+  value: "{{ transmission_download }}/Incomplete"
+- key: peer-port-random-on-start
+  value: 'false'
+- key: port-forwarding-enabled
+  value: 'false'
+- key: rpc-authentication-required
+  value: 'true'
+- key: rpc-password
+  value: 'transmission'
+- key: rpc-username
+  value: transmission
+- key: rpc-whitelist
+  value: 127.0.0.1,192.168.1.*,94.125.199.30
+- key: rpc-whitelist-enabled
+  value: 'true'

@@ -1,10 +1,11 @@
 ---
-- hosts: bastion.bakedbeans.com
+- hosts: bastion
   become: true
   tasks:
   - import_role:
       name: bastion
     vars:
+      users: "{{ bastion_users }}"
       interfaces: "{{ network_interfaces }}"
       dns_servers: "{{ network_dns_servers }}"
       vpn_vlan_interface: "{{ network_vpn_vlan_interface }}"
