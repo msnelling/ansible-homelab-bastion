@@ -12,6 +12,14 @@
   - transmission-daemon
   - transmission-cli
 
+- name: ensure download directory exists
+  file:
+    path: "{{ download_path }}"
+    state: directory
+    owner: debian-transmission
+    group: debian-transmission
+    mode: 0775
+
 - name: ensure service not running
   service:
     name: transmission-daemon
@@ -24,14 +32,6 @@
     line: '\1: "{{ item.value }}"\3'
     backrefs: yes
   loop: "{{ settings }}"
-
-- name: ensure download directory exists
-  file:
-    path: "{{ download_path }}"
-    state: directory
-    owner: debian-transmission
-    group: debian-transmission
-    mode: 0775
 
 - name: create systemd override directory
   file:

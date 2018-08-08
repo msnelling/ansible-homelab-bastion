@@ -18,26 +18,14 @@ network_interfaces:
   ipv4_address: 192.168.1.3/24
   ipv4_gateway: 192.168.1.1
   ipv6_pd: 0
-- description: Guest VLAN
-  interface: eth0.2
-  ipv6_pd: 2
-- description: IoT VLAN
-  interface: eth0.3
-  ipv6_pd: 3
 - description: VPN VLAN
   interface: eth0.4
   ipv4_address: 10.1.4.3/24
   ipv4_gateway: 10.1.4.1
-- description: VoIP VLAN
-  interface: eth0.5
-  ipv6_pd: 5
-- description: Management VLAN
-  interface: eth0.100
-  ipv6_pd: 1
 network_dns_servers: 192.168.1.1
-network_vpn_vlan_interface: "{{ network_interfaces[3].interface }}"
-network_vpn_vlan_ipv4_address: "{{ network_interfaces[3].ipv4_address }}"
-network_vpn_vlan_ipv4_gateway: "{{ network_interfaces[3].ipv4_gateway }}"
+network_vpn_vlan_interface: "{{ network_interfaces[1].interface }}"
+network_vpn_vlan_ipv4_address: "{{ network_interfaces[1].ipv4_address }}"
+network_vpn_vlan_ipv4_gateway: "{{ network_interfaces[1].ipv4_gateway }}"
 network_vpn_vlan_ipv4_network: "{{ network_vpn_vlan_ipv4_address | ipaddr('subnet') }}"
 
 nfs_mount_path: /mnt/nas/download
