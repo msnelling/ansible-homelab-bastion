@@ -1,0 +1,23 @@
+---
+- name: get location of cloudflared binary
+  stat:
+    path: "{{ cloudflared_bin_location }}/cloudflared"
+  register: cloudflared_binary
+
+- set_fact:
+    cloudflared_installed: "{{ cloudflared_binary.stat.exists | default(false) }}"
+    device_arch: "{{ 'amd64' if ansible_architecture == 'x86_64' else 'arm' }}"
+
+- name: install binary
+  import_tasks: install_binary.yml
+  when: not cloudflared_installed
+
+- name: application updates
+  import_tasks: update.yml
+
+- name: configure service
+  import_tasks: service.yml
+
+- name: configure firewall
+  import_tasks: firewall.yml
+  when: cloudflared_allow_firewall

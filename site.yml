@@ -14,6 +14,10 @@
     tags: [bastion]
 
   - import_role:
+      name: cloudflared
+    tags: [cloudflared]
+
+  - import_role:
       name: nfs_mount
     vars:
       mount_path: "{{ nfs_mount_path }}"

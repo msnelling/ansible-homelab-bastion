@@ -1,0 +1,29 @@
+---
+- name: Service | create application user
+  user:
+    name: cloudflared
+    system: yes
+
+- name: Service | template config file
+  template:
+    src: cloudflared.j2
+    dest: /etc/default/cloudflared
+    owner: cloudflared
+    group: cloudflared
+  notify: restart cloudflared service
+
+- name: Service | copy systemd service definition
+  copy:
+    src: cloudflared.service
+    dest: /lib/systemd/system/
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart cloudflared service
+  register: service
+
+- name: Service | enable systemd service
+  service:
+    name: cloudflared
+    enabled: "{{ cloudflared_enable_service }}"
+  when: service.changed
