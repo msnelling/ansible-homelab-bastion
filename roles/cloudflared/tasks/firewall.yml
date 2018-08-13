@@ -1,6 +1,0 @@
----
-- name: Firewall | Allow port in UFW
-  ufw:
-    rule: allow
-    port: "{{ cloudflared_port }}"
-    comment: "allow cloudflared"

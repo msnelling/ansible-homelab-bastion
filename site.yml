@@ -15,6 +15,16 @@
 
   - import_role:
       name: cloudflared
+    vars:
+      cloudflared_service_suffix: dns
+      cloudflared_service_options: "proxy-dns --port 5053 --upstream https://1.1.1.1/dns-query"
+    tags: [cloudflared]
+
+  - import_role:
+      name: cloudflared
+    vars:
+      cloudflared_service_suffix: pihole
+      cloudflared_service_options: "--hostname pihole.bakedbeans.com --url http://localhost"
     tags: [cloudflared]
 
   - import_role:

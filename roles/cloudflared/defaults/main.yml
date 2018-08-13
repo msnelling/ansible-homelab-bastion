@@ -2,12 +2,7 @@
 cloudflared_base_url: "https://bin.equinox.io/c/VdrWdbjqyF/"
 cloudflared_amd64_binary: "cloudflared-stable-linux-amd64.tgz"
 cloudflared_arm_binary: "cloudflared-stable-linux-arm.tgz"
-
-cloudflared_allow_firewall: false
-cloudflared_enable_service: true
-cloudflared_upstream: "https://1.1.1.1/dns-query"
-cloudflared_port: 5053
-
-cloudflared_options: "proxy-dns --port {{ cloudflared_port }} --upstream {{ cloudflared_upstream }}"
-
 cloudflared_bin_location: /usr/local/bin
+
+cloudflared_service_enabled: true
+cloudflared_service_suffix: ""
