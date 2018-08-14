@@ -1,11 +1,11 @@
 [Unit]
-Description=Cloudflare {{ cloudflared_service_suffix }} service
+Description=Cloudflare {{ service_suffix }} service
 After=syslog.target network-online.target
 
 [Service]
 Type=simple
 User=cloudflared
-EnvironmentFile=/etc/default/cloudflared-{{ cloudflared_service_suffix }}
+EnvironmentFile=/etc/default/cloudflared-{{ service_suffix }}
 ExecStart=/usr/local/bin/cloudflared $CLOUDFLARED_OPTS
 Restart=on-failure
 RestartSec=10

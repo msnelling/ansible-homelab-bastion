@@ -1,6 +1,6 @@
 ---
 - name: restart cloudflared service
   service: 
-    name: cloudflared-{{ cloudflared_service_suffix }}
-    enabled: "{{ cloudflared_service_enabled }}"
+    name: cloudflared-{{ service_suffix }}
+    enabled: "{{ service_enabled }}"
     state: restarted

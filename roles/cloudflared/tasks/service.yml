@@ -14,7 +14,7 @@
 - name: Service | template config file
   template:
     src: cloudflared.j2
-    dest: /etc/default/cloudflared-{{ cloudflared_service_suffix }}
+    dest: /etc/default/cloudflared-{{ service_suffix }}
     owner: cloudflared
     group: cloudflared
   notify: restart cloudflared service
@@ -22,7 +22,7 @@
 - name: Service | template systemd service definition
   template:
     src: cloudflared.service.j2
-    dest: /lib/systemd/system/cloudflared-{{ cloudflared_service_suffix }}.service
+    dest: /lib/systemd/system/cloudflared-{{ service_suffix }}.service
     owner: root
     group: root
     mode: 0644
@@ -31,6 +31,6 @@
 
 - name: Service | enable systemd service
   service:
-    name: cloudflared-{{ cloudflared_service_suffix }}
-    enabled: "{{ cloudflared_service_enabled }}"
+    name: cloudflared-{{ service_suffix }}
+    enabled: "{{ service_enabled }}"
   when: service.changed

@@ -1,8 +1,8 @@
 ---
-cloudflared_base_url: "https://bin.equinox.io/c/VdrWdbjqyF/"
-cloudflared_amd64_binary: "cloudflared-stable-linux-amd64.tgz"
-cloudflared_arm_binary: "cloudflared-stable-linux-arm.tgz"
-cloudflared_bin_location: /usr/local/bin
+install_base_url: "https://bin.equinox.io/c/VdrWdbjqyF/"
+install_amd64_binary: "cloudflared-stable-linux-amd64.tgz"
+install_arm_binary: "cloudflared-stable-linux-arm.tgz"
+install_bin_location: /usr/local/bin
 
-cloudflared_service_enabled: true
-cloudflared_service_suffix: ""
+service_enabled: true
+service_suffix: ""

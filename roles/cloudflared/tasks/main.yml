@@ -1,7 +1,7 @@
 ---
 - name: get location of cloudflared binary
   stat:
-    path: "{{ cloudflared_bin_location }}/cloudflared"
+    path: "{{ install_bin_location }}/cloudflared"
   register: cloudflared_binary
 
 - set_fact:

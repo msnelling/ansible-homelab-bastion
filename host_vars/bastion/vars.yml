@@ -54,3 +54,6 @@ transmission_settings:
   value: 127.0.0.1,192.168.1.*,94.125.199.30
 - key: rpc-whitelist-enabled
   value: 'true'
+
+cloudflare_dns_service_options: "proxy-dns --port 5053 --upstream https://1.1.1.1/dns-query"
+cloudflare_pihole_service_options: "--hostname pihole.bakedbeans.com --url http://localhost"
