@@ -26,7 +26,7 @@ option interface_mtu
 require dhcp_server_identifier
 
 # Generate Stable Private IPv6 Addresses instead of hardware based ones
-slaac private
+slaac hardware
 
 # DNS servers
 static domain_name_servers={{ dns_servers }}
@@ -41,6 +41,7 @@ interface {{ item.interface }}
   static routers={{ item.ipv4_gateway }}
 {% endif %}
 {% if item.ipv6_pd is defined %}
+  ipv6
   ia_pd {{ item.ipv6_pd }} {{ item.interface }}
 {% endif %}
 

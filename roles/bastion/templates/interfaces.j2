@@ -13,7 +13,7 @@ source-directory /etc/network/interfaces.d
 auto {{ item.interface }}
 iface {{ item.interface }} inet manual
 {% if item.ipv6_pd is defined %}
-iface {{ item.interface }} inet6 auto
+iface {{ item.interface }} inet6 manual
 {% endif %}
 
 {% endfor %}
