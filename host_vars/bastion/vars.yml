@@ -22,6 +22,8 @@ network_interfaces:
   interface: eth0.4
   ipv4_address: 10.1.4.3/24
   ipv4_gateway: 10.1.4.1
+- description: Management VLAN
+  interface: eth0.100
 network_dns_servers: 192.168.1.1
 network_vpn_vlan_interface: "{{ network_interfaces[1].interface }}"
 network_vpn_vlan_ipv4_address: "{{ network_interfaces[1].ipv4_address }}"
@@ -36,6 +38,8 @@ transmission_download: "{{ nfs_mount_path }}/Transmission"
 transmission_settings:
 - key: bind-address-ipv4
   value: "{{ network_vpn_vlan_ipv4_address | ipaddr('address') }}"
+- key: bind-address-ipv6
+  value: "::1"
 - key: download-dir
   value: "{{ transmission_download }}"
 - key: incomplete-dir
