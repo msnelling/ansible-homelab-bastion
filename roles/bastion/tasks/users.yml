@@ -16,3 +16,4 @@
   loop_control:
     label: "{{ _add_user.username }}"
     loop_var: _add_user
+  when: not ansible_check_mode

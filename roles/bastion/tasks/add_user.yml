@@ -3,7 +3,7 @@
   shell: echo '{{ _add_user.password }}' | mkpasswd --method=sha-512 --stdin --salt='{{ inventory_hostname | hash('sha1') | truncate(16) }}'
   register: encrypted_password
 
-- name: Add User | create the user '{{ _add_user.username }}'
+- name: Add User | create the user {{ _add_user.username }}
   user:
     name: "{{ _add_user.username }}"
     password: "{{ encrypted_password.stdout_lines[0] }}"
