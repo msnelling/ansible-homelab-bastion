@@ -6,3 +6,5 @@ install_bin_location: /usr/local/bin
 
 service_enabled: true
 service_suffix: ""
+service_systemd_after: ""
+service_systemd_requires: ""

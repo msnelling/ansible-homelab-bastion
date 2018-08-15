@@ -1,6 +1,9 @@
 ---
-- name: restart cloudflared service
-  service: 
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: restart service {{ service_suffix }}
+  systemd: 
     name: cloudflared-{{ service_suffix }}
-    enabled: "{{ service_enabled }}"
     state: restarted

@@ -17,15 +17,24 @@
       name: cloudflared
     vars:
       service_suffix: dns
-      service_options: "{{ cloudflare_dns_service_options }}"
-    tags: [cloudflared]
+      service_config: "{{ cloudflare_dns_service_config }}"
+    tags: [cloudflared,dnsproxy]
 
   - import_role:
       name: cloudflared
     vars:
       service_suffix: pihole
-      service_options: "{{ cloudflare_pihole_service_options }}"
-    tags: [cloudflared]
+      service_config: "{{ cloudflare_pihole_service_config }}"
+      service_systemd_after: cloudflared-dns.service
+    tags: [cloudflared,argo,argo-pihole]
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: nas
+      service_config: "{{ cloudflare_nas_service_config }}"
+      service_systemd_after: cloudflared-dns.service
+    tags: [cloudflared,argo,argo-nas]
 
   - import_role:
       name: nfs_mount

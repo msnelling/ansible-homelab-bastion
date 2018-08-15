@@ -1,13 +1,16 @@
 [Unit]
 Description=Cloudflare {{ service_suffix }} service
-After=syslog.target network-online.target
+After=syslog.target network-online.target {{ service_systemd_after }}
+StartLimitInterval=200
+StartLimitBurst=5
 
 [Service]
 Type=simple
 User=cloudflared
+SyslogIdentifier=cloudflared-{{ service_suffix }}
 EnvironmentFile=/etc/default/cloudflared-{{ service_suffix }}
 ExecStart=/usr/local/bin/cloudflared $CLOUDFLARED_OPTS
-Restart=on-failure
+Restart=always
 RestartSec=10
 KillMode=process
 

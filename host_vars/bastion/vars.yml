@@ -59,5 +59,20 @@ transmission_settings:
 - key: rpc-whitelist-enabled
   value: 'true'
 
-cloudflare_dns_service_options: "proxy-dns --port 5053 --upstream https://1.1.1.1/dns-query"
-cloudflare_pihole_service_options: "--hostname pihole.bakedbeans.com --url http://localhost"
+cloudflare_dns_service_config:
+  proxy-dns: true
+  proxy-dns-port: 5053
+  proxy-dns-upstream:
+  - https://1.1.1.1/dns-query
+  - https://1.0.0.1/dns-query
+  - https://2606:4700:4700::1111/dns-query
+  - https://2606:4700:4700::1001/dns-query
+
+cloudflare_nas_service_config:
+  hostname: qnap.bakedbeans.com
+  url: https://nas.local:8443
+  origin-server-name: nas.bakedbeans.com
+
+cloudflare_pihole_service_config:
+  hostname: pihole.bakedbeans.com
+  url: http://localhost
