@@ -76,3 +76,7 @@ cloudflare_nas_service_config:
 cloudflare_pihole_service_config:
   hostname: pihole.bakedbeans.com
   url: http://localhost
+
+cloudflare_transmission_service_config:
+  hostname: tr-gui.bakedbeans.com
+  url: http://localhost:9091

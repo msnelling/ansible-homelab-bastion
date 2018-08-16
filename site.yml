@@ -37,6 +37,14 @@
     tags: [cloudflared,argo,argo-nas]
 
   - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: transmission
+      service_config: "{{ cloudflare_transmission_service_config }}"
+      service_systemd_after: cloudflared-transmission.service
+    tags: [cloudflared,argo,argo-transmission]
+
+  - import_role:
       name: nfs_mount
     vars:
       mount_path: "{{ nfs_mount_path }}"
