@@ -71,7 +71,12 @@ cloudflare_dns_service_config:
 cloudflare_nas_service_config:
   hostname: qnap.bakedbeans.com
   url: https://nas.local:8443
-  origin-server-name: nas.bakedbeans.com
+  no-tls-verify: true
+
+cloudflare_plex_service_config:
+  hostname: plex.bakedbeans.com
+  url: https://nas.local:32400
+  no-tls-verify: true
 
 cloudflare_pihole_service_config:
   hostname: pihole.bakedbeans.com

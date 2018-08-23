@@ -26,7 +26,7 @@
       service_suffix: pihole
       service_config: "{{ cloudflare_pihole_service_config }}"
       service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argo,argo-pihole]
+    tags: [cloudflared,argotunnel,argotunnel-pihole]
 
   - import_role:
       name: cloudflared
@@ -34,15 +34,23 @@
       service_suffix: nas
       service_config: "{{ cloudflare_nas_service_config }}"
       service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argo,argo-nas]
+    tags: [cloudflared,argotunnel,argotunnel-nas]
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: plex
+      service_config: "{{ cloudflare_plex_service_config }}"
+      service_systemd_after: cloudflared-dns.service
+    tags: [cloudflared,argotunnel,argotunnel-plex]
 
   - import_role:
       name: cloudflared
     vars:
       service_suffix: transmission
       service_config: "{{ cloudflare_transmission_service_config }}"
-      service_systemd_after: cloudflared-transmission.service
-    tags: [cloudflared,argo,argo-transmission]
+      service_systemd_after: cloudflared-dns.service
+    tags: [cloudflared,argotunnel,argotunnel-transmission]
 
   - import_role:
       name: nfs_mount
