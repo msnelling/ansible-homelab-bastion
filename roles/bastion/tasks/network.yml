@@ -1,5 +1,5 @@
 ---
-- name: Network | internface configuration
+- name: Network | interface configuration
   template: 
     src: interfaces.j2
     dest: /etc/network/interfaces

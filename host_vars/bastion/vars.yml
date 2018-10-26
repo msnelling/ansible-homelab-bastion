@@ -6,6 +6,7 @@ bastion_users:
   password: "{{ vault_user_mark_password }}"
   shell: /bin/bash
   groups:
+  - users
   - sudo
   authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6Tvl6E1eMdyvazTIRH3eA2qUqTn5lR7pVdWpQQeVT4sBxzN273XqPvxznmVBMxo0QSWYqLPWVLcygmUo/ZYcEOJBgpdDrX71km3iyEp07TMGJzpSJ6Ioy1HHK3P8G+XCESX6SxJS4XrD/IIM9MBL5yAjrjU8lmqQ5s4/y8LLzsTrPiSU3aFaFWRaRUmFSx07zq78pp+B+vVOvM4CC/uaASQbbIz+zfGlIDsOHXjUmYmZVpnHgQMbXldy+ftEGDwqZcFcJOqgEGEMe9+BILh24NuKq8jj6uHXlGw1hoXHn8FPUZ09yMnE5Z+PGgjWqDZa6BOxdcgo/I68l8Jj9pWRH mark@bakedbeans.com
