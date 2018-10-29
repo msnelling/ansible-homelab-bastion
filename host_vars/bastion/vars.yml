@@ -73,6 +73,7 @@ cloudflare_nas_service_config:
   hostname: qnap.bakedbeans.com
   url: https://nas.local:8443
   no-tls-verify: true
+  no-chunked-encoding: true
 
 cloudflare_plex_service_config:
   hostname: plex.bakedbeans.com
