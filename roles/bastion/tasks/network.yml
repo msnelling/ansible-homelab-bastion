@@ -20,6 +20,11 @@
     dest: /etc/iproute2/rt_tables.d/vpn.conf
     content: '200 vlanvpn'
 
+- name: Network | ensure dhcpcd hooks directory exists
+  file:
+    path: /lib/dhcpcd/dhcpcd-hooks
+    state: directory
+
 - name: Network | add VPN routes
   copy:
     dest: /lib/dhcpcd/dhcpcd-hooks/40-vpnroute
