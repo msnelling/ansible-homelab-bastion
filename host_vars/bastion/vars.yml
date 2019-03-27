@@ -32,7 +32,7 @@ network_vpn_vlan_ipv4_gateway: "{{ network_interfaces[1].ipv4_gateway }}"
 network_vpn_vlan_ipv4_network: "{{ network_vpn_vlan_ipv4_address | ipaddr('subnet') }}"
 
 nfs_mount_path: /mnt/nas/download
-nfs_source: 10.1.1.2:/Download
+nfs_source: 10.1.1.175:/download
 nfs_options: rsize=8192,wsize=8192,timeo=14,intr
 
 transmission_download: "{{ nfs_mount_path }}/Transmission"
@@ -56,7 +56,7 @@ transmission_settings:
 - key: rpc-username
   value: transmission
 - key: rpc-whitelist
-  value: 127.0.0.1,192.168.1.*,94.125.199.30
+  value: 127.0.0.1,94.125.199.30
 - key: rpc-whitelist-enabled
   value: 'true'
 
@@ -77,7 +77,7 @@ cloudflare_nas_service_config:
 
 cloudflare_plex_service_config:
   hostname: plex.bakedbeans.com
-  url: https://nas.local:32400
+  url: https://localhost:32400
   no-tls-verify: true
 
 cloudflare_pihole_service_config:
@@ -87,3 +87,8 @@ cloudflare_pihole_service_config:
 cloudflare_transmission_service_config:
   hostname: tr-gui.bakedbeans.com
   url: http://localhost:9091
+
+cloudflare_freenas_service_config:
+  hostname: freenas.bakedbeans.com
+  url: https://freenas.local
+  no-tls-verify: true

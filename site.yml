@@ -44,13 +44,21 @@
       service_systemd_after: cloudflared-dns.service
     tags: [cloudflared,argotunnel,argotunnel-plex]
 
+#  - import_role:
+#      name: cloudflared
+#    vars:
+#      service_suffix: transmission
+#      service_config: "{{ cloudflare_transmission_service_config }}"
+#      service_systemd_after: cloudflared-dns.service
+#    tags: [cloudflared,argotunnel,argotunnel-transmission]
+
   - import_role:
       name: cloudflared
     vars:
-      service_suffix: transmission
-      service_config: "{{ cloudflare_transmission_service_config }}"
+      service_suffix: freenas
+      service_config: "{{ cloudflare_freenas_service_config }}"
       service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argotunnel,argotunnel-transmission]
+    tags: [cloudflared,argotunnel,argotunnel-freenas]
 
   - import_role:
       name: nfs_mount
