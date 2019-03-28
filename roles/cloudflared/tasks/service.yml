@@ -1,18 +1,18 @@
 ---
-- name: Service | create application user
+- name: Service[{{ service_suffix }}] | create application user
   user:
     name: cloudflared
     system: yes
     create_home: no
 
-- name: Service | create config directory
+- name: Service[{{ service_suffix }}] | create config directory
   file:
     path: /etc/cloudflared
     state: directory
     owner: cloudflared
     group: cloudflared
 
-- name: Service | template service config file
+- name: Service[{{ service_suffix }}] | template service config file
   template:
     src: cloudflared.j2
     dest: /etc/default/cloudflared-{{ service_suffix }}
@@ -21,14 +21,14 @@
     mode: 0644
   notify: restart service {{ service_suffix }}
 
-- name: Service | cloudflared config
+- name: Service[{{ service_suffix }}] | cloudflared config
   copy:
     content: "{{ service_config | to_nice_yaml(indent=2) }}"
     dest: /etc/cloudflared/{{ service_suffix }}.yml
     owner: cloudflared
     group: cloudflared
 
-- name: Service | template service definition
+- name: Service[{{ service_suffix }}] | template service definition
   template:
     src: cloudflared.service.j2
     dest: /lib/systemd/system/cloudflared-{{ service_suffix }}.service
@@ -39,7 +39,7 @@
   - reload systemd
   - restart service {{ service_suffix }}
 
-- name: Service | enable service
+- name: Service[{{ service_suffix }}] | enable service
   systemd:
     name: cloudflared-{{ service_suffix }}
     enabled: "{{ service_enabled }}"

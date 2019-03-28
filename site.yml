@@ -44,13 +44,14 @@
       service_systemd_after: cloudflared-dns.service
     tags: [cloudflared,argotunnel,argotunnel-plex]
 
-#  - import_role:
-#      name: cloudflared
-#    vars:
-#      service_suffix: transmission
-#      service_config: "{{ cloudflare_transmission_service_config }}"
-#      service_systemd_after: cloudflared-dns.service
-#    tags: [cloudflared,argotunnel,argotunnel-transmission]
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: transmission
+      service_config: "{{ cloudflare_transmission_service_config }}"
+      service_systemd_after: cloudflared-dns.service
+    tags: [cloudflared,argotunnel,argotunnel-transmission]
+    when: false
 
   - import_role:
       name: cloudflared
@@ -59,6 +60,23 @@
       service_config: "{{ cloudflare_freenas_service_config }}"
       service_systemd_after: cloudflared-dns.service
     tags: [cloudflared,argotunnel,argotunnel-freenas]
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: esxi
+      service_config: "{{ cloudflare_esxi_service_config }}"
+      service_systemd_after: cloudflared-esxi.service
+    tags: [cloudflared,argotunnel,argotunnel-esxi]
+
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: ipmi
+      service_config: "{{ cloudflare_ipmi_service_config }}"
+      service_systemd_after: cloudflared-ipmi.service
+    tags: [cloudflared,argotunnel,argotunnel-ipmi]
 
   - import_role:
       name: nfs_mount

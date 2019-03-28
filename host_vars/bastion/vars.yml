@@ -70,25 +70,35 @@ cloudflare_dns_service_config:
   - https://2606:4700:4700::1001/dns-query
 
 cloudflare_nas_service_config:
-  hostname: qnap.bakedbeans.com
+  hostname: qnap.synchro.dev
   url: https://nas.local:8443
   no-tls-verify: true
   no-chunked-encoding: true
 
 cloudflare_plex_service_config:
-  hostname: plex.bakedbeans.com
+  hostname: plex.synchro.dev
   url: https://localhost:32400
   no-tls-verify: true
 
 cloudflare_pihole_service_config:
-  hostname: pihole.bakedbeans.com
+  hostname: pihole.synchro.dev
   url: http://localhost
 
 cloudflare_transmission_service_config:
-  hostname: tr-gui.bakedbeans.com
+  hostname: transmission.synchro.dev
   url: http://localhost:9091
 
 cloudflare_freenas_service_config:
-  hostname: freenas.bakedbeans.com
+  hostname: freenas.synchro.dev
   url: https://freenas.local
+  no-tls-verify: true
+
+cloudflare_esxi_service_config:
+  hostname: stellar.synchro.dev
+  url: https://10.1.1.90
+  no-tls-verify: true
+
+cloudflare_ipmi_service_config:
+  hostname: mercury.synchro.dev
+  url: https://mercury
   no-tls-verify: true
