@@ -16,8 +16,6 @@
   file:
     path: "{{ download_path }}"
     state: directory
-    owner: debian-transmission
-    group: debian-transmission
     mode: 0775
 
 - name: ensure service not running

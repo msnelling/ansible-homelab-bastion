@@ -1,0 +1,10 @@
+---
+- name: Network | update netplan
+  template:
+    src: netplan.j2
+    dest: /etc/netplan/50-cloud-init.yaml
+  register: netplan
+
+- name: Network | apply netplan
+  command: netplan apply
+  when: netplan.changed

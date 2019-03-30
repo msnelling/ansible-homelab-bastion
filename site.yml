@@ -31,14 +31,6 @@
   - import_role:
       name: cloudflared
     vars:
-      service_suffix: nas
-      service_config: "{{ cloudflare_nas_service_config }}"
-      service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argotunnel,argotunnel-nas]
-
-  - import_role:
-      name: cloudflared
-    vars:
       service_suffix: plex
       service_config: "{{ cloudflare_plex_service_config }}"
       service_systemd_after: cloudflared-dns.service
@@ -51,7 +43,6 @@
       service_config: "{{ cloudflare_transmission_service_config }}"
       service_systemd_after: cloudflared-dns.service
     tags: [cloudflared,argotunnel,argotunnel-transmission]
-    when: false
 
   - import_role:
       name: cloudflared
@@ -68,7 +59,6 @@
       service_config: "{{ cloudflare_esxi_service_config }}"
       service_systemd_after: cloudflared-esxi.service
     tags: [cloudflared,argotunnel,argotunnel-esxi]
-
 
   - import_role:
       name: cloudflared
