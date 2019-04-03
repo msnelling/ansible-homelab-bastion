@@ -14,19 +14,19 @@
     tags: [bastion]
 
   - import_role:
-      name: cloudflared
+      name: nfs_mount
     vars:
-      service_suffix: dns
-      service_config: "{{ cloudflare_dns_service_config }}"
-    tags: [cloudflared,dnsproxy]
+      mount_path: "{{ nfs_mount_path }}"
+      source: "{{ nfs_source }}"
+      options: "{{ nfs_options }}"
+    tags: [nfs]
 
   - import_role:
-      name: cloudflared
+      name: transmission
     vars:
-      service_suffix: pihole
-      service_config: "{{ cloudflare_pihole_service_config }}"
-      service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argotunnel,argotunnel-pihole]
+      download_path: "{{ transmission_download }}"
+      settings: "{{ transmission_settings }}"
+    tags: [transmission]
 
   - import_role:
       name: cloudflared
@@ -69,16 +69,35 @@
     tags: [cloudflared,argotunnel,argotunnel-ipmi]
 
   - import_role:
-      name: nfs_mount
+      name: cloudflared
     vars:
-      mount_path: "{{ nfs_mount_path }}"
-      source: "{{ nfs_source }}"
-      options: "{{ nfs_options }}"
-    tags: [nfs]
+      service_suffix: resilio
+      service_config: "{{ cloudflare_resilio_service_config }}"
+      service_systemd_after: cloudflared-resilio.service
+    tags: [cloudflared,argotunnel,argotunnel-resilio]
+
+- hosts: neptune
+  become: true
+  tasks:
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: dns
+      service_config: "{{ cloudflare_dns_service_config }}"
+    tags: [cloudflared,dnsproxy]
 
   - import_role:
-      name: transmission
+      name: cloudflared
     vars:
-      download_path: "{{ transmission_download }}"
-      settings: "{{ transmission_settings }}"
-    tags: [transmission]
+      service_suffix: pihole
+      service_config: "{{ cloudflare_pihole_service_config }}"
+      service_systemd_after: cloudflared-dns.service
+    tags: [cloudflared,argotunnel,argotunnel-pihole]
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: powerdns
+      service_config: "{{ cloudflare_powerdns_service_config }}"
+      service_systemd_after: cloudflared-dns.service
+    tags: [cloudflared,argotunnel,argotunnel-powerdns]

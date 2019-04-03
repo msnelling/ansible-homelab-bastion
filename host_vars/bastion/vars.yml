@@ -60,23 +60,10 @@ transmission_settings:
 - key: rpc-whitelist-enabled
   value: 'true'
 
-cloudflare_dns_service_config:
-  proxy-dns: true
-  proxy-dns-port: 5053
-  proxy-dns-upstream:
-  - https://1.1.1.1/dns-query
-  - https://1.0.0.1/dns-query
-  - https://2606:4700:4700::1111/dns-query
-  - https://2606:4700:4700::1001/dns-query
-
 cloudflare_plex_service_config:
   hostname: plex.synchro.dev
   url: https://localhost:32400
   no-tls-verify: true
-
-cloudflare_pihole_service_config:
-  hostname: pihole.synchro.dev
-  url: http://localhost
 
 cloudflare_transmission_service_config:
   hostname: transmission.synchro.dev
@@ -96,3 +83,7 @@ cloudflare_ipmi_service_config:
   hostname: mercury.synchro.dev
   url: https://mercury
   no-tls-verify: true
+
+cloudflare_resilio_service_config:
+  hostname: resilio.synchro.dev
+  url: http://localhost:8888
