@@ -59,6 +59,8 @@ transmission_settings:
   value: 127.0.0.1,94.125.199.30
 - key: rpc-whitelist-enabled
   value: 'true'
+- key: umask
+  value: 2
 
 cloudflare_plex_service_config:
   hostname: plex.synchro.dev

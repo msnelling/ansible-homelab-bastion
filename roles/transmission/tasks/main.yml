@@ -25,7 +25,8 @@
 
 - name: update config settings
   lineinfile:
-    path: /etc/transmission-daemon/settings.json
+    #path: /etc/transmission-daemon/settings.json
+    path: /var/lib/transmission-daemon/info/settings.json
     regexp: '^(\s+"{{ item.key }}"):\s+"(.*)"(,?)$'
     line: '\1: "{{ item.value }}"\3'
     backrefs: yes
