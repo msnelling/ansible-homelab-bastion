@@ -15,5 +15,5 @@ cloudflare_pihole_service_config:
   url: http://localhost:8080
 
 cloudflare_powerdns_service_config:
-  hostname: neptune.synchro.dev
-  url: http://localhost
+  hostname: pdns.synchro.dev
+  url: https://pdns.lan.synchro.dev
