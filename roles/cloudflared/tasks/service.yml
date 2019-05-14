@@ -12,21 +12,13 @@
     owner: cloudflared
     group: cloudflared
 
-- name: Service[{{ service_suffix }}] | template service config file
-  template:
-    src: cloudflared.j2
-    dest: /etc/default/cloudflared-{{ service_suffix }}
-    owner: cloudflared
-    group: cloudflared
-    mode: 0644
-  notify: restart service {{ service_suffix }}
-
 - name: Service[{{ service_suffix }}] | cloudflared config
   copy:
     content: "{{ service_config | to_nice_yaml(indent=2) }}"
     dest: /etc/cloudflared/{{ service_suffix }}.yml
     owner: cloudflared
     group: cloudflared
+  register: cloudflared_config
 
 - name: Service[{{ service_suffix }}] | template service definition
   template:
@@ -35,11 +27,35 @@
     owner: root
     group: root
     mode: 0644
-  notify: 
-  - reload systemd
-  - restart service {{ service_suffix }}
+  register: service_definition
+
+- name: Service[{{ service_suffix }}] | template service config file
+  template:
+    src: cloudflared.j2
+    dest: /etc/default/cloudflared-{{ service_suffix }}
+    owner: cloudflared
+    group: cloudflared
+    mode: 0644
+  register: service_defaults
 
 - name: Service[{{ service_suffix }}] | enable service
   systemd:
     name: cloudflared-{{ service_suffix }}
     enabled: "{{ service_enabled }}"
+    daemon_reload: yes
+
+- name: Service[{{ service_suffix }}] | reload systemd
+  systemd:
+    daemon_reload: yes
+  when: service_definition.changed or service_defaults.changed
+
+- name: Service[{{ service_suffix }}] stop cloudflared
+  systemd: 
+    name: cloudflared-{{ service_suffix }}
+    state: stopped
+  when: cloudflared_config.changed
+
+- name: Service[{{ service_suffix }}] ensure cloudflared started
+  systemd: 
+    name: cloudflared-{{ service_suffix }}
+    state: started

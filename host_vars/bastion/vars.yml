@@ -72,15 +72,15 @@ cloudflare_transmission_service_config:
 
 cloudflare_freenas_service_config:
   hostname: freenas.synchro.dev
-  url: https://freenas.local
+  url: https://pluto.lan.synchro.dev
   no-tls-verify: true
 
 cloudflare_esxi_service_config:
   hostname: stellar.synchro.dev
-  url: https://10.1.1.10
+  url: https://stellar.lan.synchro.dev
   no-tls-verify: true
 
 cloudflare_ipmi_service_config:
-  hostname: mercury.synchro.dev
-  url: https://mercury
+  hostname: stellar-mgmt.synchro.dev
+  url: https://stellar.mgmt.synchro.dev
   no-tls-verify: true

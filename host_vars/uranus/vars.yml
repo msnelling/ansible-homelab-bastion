@@ -11,9 +11,5 @@ cloudflare_dns_service_config:
   - https://2606:4700:4700::1001/dns-query
 
 cloudflare_pihole_service_config:
-  hostname: pihole01.synchro.dev
-  url: https://pihole01.svc.synchro.dev
-
-cloudflare_powerdns_service_config:
-  hostname: pdns.synchro.dev
-  url: https://pdns.svc.synchro.dev
+  hostname: pihole02.synchro.dev
+  url: http://pihole02.svc.synchro.dev

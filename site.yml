@@ -33,48 +33,35 @@
     vars:
       service_suffix: plex
       service_config: "{{ cloudflare_plex_service_config }}"
-      service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argotunnel,argotunnel-plex]
+    tags: [cloudflared,argo,argo-plex]
 
   - import_role:
       name: cloudflared
     vars:
       service_suffix: transmission
       service_config: "{{ cloudflare_transmission_service_config }}"
-      service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argotunnel,argotunnel-transmission]
+    tags: [cloudflared,argo,argo-transmission]
 
   - import_role:
       name: cloudflared
     vars:
       service_suffix: freenas
       service_config: "{{ cloudflare_freenas_service_config }}"
-      service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argotunnel,argotunnel-freenas]
+    tags: [cloudflared,argo,argo-freenas]
 
   - import_role:
       name: cloudflared
     vars:
       service_suffix: esxi
       service_config: "{{ cloudflare_esxi_service_config }}"
-      service_systemd_after: cloudflared-esxi.service
-    tags: [cloudflared,argotunnel,argotunnel-esxi]
+    tags: [cloudflared,argo,argo-esxi]
 
   - import_role:
       name: cloudflared
     vars:
       service_suffix: ipmi
       service_config: "{{ cloudflare_ipmi_service_config }}"
-      service_systemd_after: cloudflared-ipmi.service
-    tags: [cloudflared,argotunnel,argotunnel-ipmi]
-
-  - import_role:
-      name: cloudflared
-    vars:
-      service_suffix: resilio
-      service_config: "{{ cloudflare_resilio_service_config }}"
-      service_systemd_after: cloudflared-resilio.service
-    tags: [cloudflared,argotunnel,argotunnel-resilio]
+    tags: [cloudflared,argo,argo-ipmi]
 
 - hosts: neptune
   become: true
@@ -92,12 +79,31 @@
       service_suffix: pihole
       service_config: "{{ cloudflare_pihole_service_config }}"
       service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argotunnel,argotunnel-pihole]
+    tags: [cloudflared,argo,argo-pihole]
 
   - import_role:
       name: cloudflared
     vars:
       service_suffix: powerdns
       service_config: "{{ cloudflare_powerdns_service_config }}"
+    tags: [cloudflared,argo,argo-powerdns]
+
+- hosts: uranus
+  become: true
+  tasks:
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: dns
+      service_config: "{{ cloudflare_dns_service_config }}"
+    tags: [cloudflared,dnsproxy]
+    when: false
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: pihole
+      service_config: "{{ cloudflare_pihole_service_config }}"
       service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argotunnel,argotunnel-powerdns]
+    tags: [cloudflared,argo,argo-pihole]
+    when: false
