@@ -1,0 +1,19 @@
+ansible_user: "{{ vault_provisioning_username }}"
+ansible_become_pass: "{{ vault_provisioning_password }}"
+
+cloudflare_dns_service_config:
+  proxy-dns: true
+  proxy-dns-port: 5053
+  proxy-dns-upstream:
+  - https://1.1.1.1/dns-query
+  - https://1.0.0.1/dns-query
+  - https://2606:4700:4700::1111/dns-query
+  - https://2606:4700:4700::1001/dns-query
+
+cloudflare_pihole_service_config:
+  hostname: pihole01.synchro.dev
+  url: https://pihole01.svc.synchro.dev
+
+cloudflare_powerdns_service_config:
+  hostname: pdns.synchro.dev
+  url: https://pdns.svc.synchro.dev

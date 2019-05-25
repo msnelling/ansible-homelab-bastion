@@ -1,4 +1,9 @@
 ---
+- name: ensure NFS client installed
+  package:
+    name: nfs-common
+    state: latest
+
 - name: ensure mount point exists
   file:
     path: "{{ nfs_mount_path }}"
@@ -7,7 +12,7 @@
 - name: create mount
   mount:
     path: "{{ nfs_mount_path }}"
-    src: 192.168.1.2:/Download
+    src: "{{ nfs_source }}"
     fstype: nfs
-    opts: rsize=8192,wsize=8192,timeo=14,intr
+    opts: "{{ nfs_options }}"
     state: mounted

@@ -10,14 +10,13 @@ bastion_users:
   - sudo
   authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6Tvl6E1eMdyvazTIRH3eA2qUqTn5lR7pVdWpQQeVT4sBxzN273XqPvxznmVBMxo0QSWYqLPWVLcygmUo/ZYcEOJBgpdDrX71km3iyEp07TMGJzpSJ6Ioy1HHK3P8G+XCESX6SxJS4XrD/IIM9MBL5yAjrjU8lmqQ5s4/y8LLzsTrPiSU3aFaFWRaRUmFSx07zq78pp+B+vVOvM4CC/uaASQbbIz+zfGlIDsOHXjUmYmZVpnHgQMbXldy+ftEGDwqZcFcJOqgEGEMe9+BILh24NuKq8jj6uHXlGw1hoXHn8FPUZ09yMnE5Z+PGgjWqDZa6BOxdcgo/I68l8Jj9pWRH mark@bakedbeans.com
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDa6fSgQbUI2fSj7knUKEjHTPeeEBO6+f2wayFuny5DK3X1SfF5/9iyHwBYbfkgCoA69a54hVaKvmlHMt1OTeU9lJLS20RFG3xUjrgnbVPJW6VqzbymkgbChAtyoZCPoQAMUUQXbob7bK/kIMb9+1SfTghiEuhTD96YWGG4GstJIOZbGXKfTOod5prvzrNTus/ggkNp72uk8BoIQdFglS2ZO6aWWud6EVbvJHFr/avVeZMK4iEHic56Hy+IFWjnty24c5634AvHVxzMKvcl2ezZomRKaJjuP+GNdBu9O6pwfhBsELpGe/Bh+Bg9nUgeOV2LTIiZ0ZbYGThBg+a6a6mV mark@MacBook-Pro.local
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjunBoGmn0JEmEb/wgNP3+uX9mdhIqhKOzdcdVvsXm/qskmka/au6doCpHIZo9GNb0c3WmFaTDja1dZuU624aJGaHyNNoBrzUjZRr2VzjtmW8Ho85A4/iLmn1Vu+CmBMoDn/BNC1Zb2PWGX451FngrH6ir1Z4yeAqLJS4o/mEh9EReqfv4LPUxgoKtHZw3M31HHYPRMGk0ohXbKT2yuiqvfT88fx1hvY+diGHBZOdam7AR9DH5L1ntv0Hvl2jRaAKe2EKY+lqkCw16Vk7FZEwOodkyZL37lh6zh5iLe5jbUSBjf9gG5XwFLh0hWTG2rAiP5iDHVir4JhrES9clBcZt cardno:000604944324
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDcQE/cTtzHHZ6c1R0ZwGGmebYQI4mzZcdAydfJR/MlQnjW1974tP7EDQ4lM0jL/PqNoePc2t/5TVuG7e+JR/SnJi4wpflRuCZPVyfnf5Q6z/gXPzzdeL15XYPlZJNRrZF5UCBMVR6u9+nMCOLp5uIrSGisBya40elTvxxWeTbmhheXwlUgRFFqujgDm69LaqgQMfctrbjGqbMtmzWxtczYL2ArQKyuml6BYt9itrAb2MGJFLTyyqooWP2rcrrpoKEYhTj6cXA/b750q+CwXhieQuquy2E4ceDDqk2Z/ysiocnnfAsYiUI6lnDTjnJpGJetcR5zLftnHlYXJVxPwBSt cardno:000604944324
 
 network_interfaces:
 - description: Main network
   interface: eth0
-  ipv4_address: 192.168.1.3/24
-  ipv4_gateway: 192.168.1.1
+  ipv4_address: 10.1.1.3/24
+  ipv4_gateway: 10.1.1.1
   ipv6_pd: 0
 - description: VPN VLAN
   interface: eth0.4
@@ -25,17 +24,17 @@ network_interfaces:
   ipv4_gateway: 10.1.4.1
 - description: Management VLAN
   interface: eth0.100
-network_dns_servers: 192.168.1.1
+network_dns_servers: 10.1.1.1
 network_vpn_vlan_interface: "{{ network_interfaces[1].interface }}"
 network_vpn_vlan_ipv4_address: "{{ network_interfaces[1].ipv4_address }}"
 network_vpn_vlan_ipv4_gateway: "{{ network_interfaces[1].ipv4_gateway }}"
 network_vpn_vlan_ipv4_network: "{{ network_vpn_vlan_ipv4_address | ipaddr('subnet') }}"
 
-nfs_mount_path: /mnt/nas/download
-nfs_source: 192.168.1.2:/Download
-nfs_options: rsize=8192,wsize=8192,timeo=14,intr
+nfs_mount_path: /mnt/nas/media
+nfs_source: 10.1.90.2:/mnt/tank/media
+nfs_options: intr
 
-transmission_download: "{{ nfs_mount_path }}/Transmission"
+transmission_download: "{{ nfs_mount_path }}/download/Transmission"
 transmission_settings:
 - key: bind-address-ipv4
   value: "{{ network_vpn_vlan_ipv4_address | ipaddr('address') }}"
@@ -56,34 +55,32 @@ transmission_settings:
 - key: rpc-username
   value: transmission
 - key: rpc-whitelist
-  value: 127.0.0.1,192.168.1.*,94.125.199.30
+  value: 127.0.0.1,10.1.1.*,94.125.199.30
 - key: rpc-whitelist-enabled
   value: 'true'
-
-cloudflare_dns_service_config:
-  proxy-dns: true
-  proxy-dns-port: 5053
-  proxy-dns-upstream:
-  - https://1.1.1.1/dns-query
-  - https://1.0.0.1/dns-query
-  - https://2606:4700:4700::1111/dns-query
-  - https://2606:4700:4700::1001/dns-query
-
-cloudflare_nas_service_config:
-  hostname: qnap.bakedbeans.com
-  url: https://nas.local:8443
-  no-tls-verify: true
-  no-chunked-encoding: true
+- key: umask
+  value: 2
 
 cloudflare_plex_service_config:
-  hostname: plex.bakedbeans.com
-  url: https://nas.local:32400
+  hostname: plex.synchro.dev
+  url: https://localhost:32400
   no-tls-verify: true
 
-cloudflare_pihole_service_config:
-  hostname: pihole.bakedbeans.com
-  url: http://localhost
-
 cloudflare_transmission_service_config:
-  hostname: tr-gui.bakedbeans.com
+  hostname: transmission.synchro.dev
   url: http://localhost:9091
+
+cloudflare_freenas_service_config:
+  hostname: freenas.synchro.dev
+  url: https://pluto.lan.synchro.dev
+  no-tls-verify: true
+
+cloudflare_esxi_service_config:
+  hostname: stellar.synchro.dev
+  url: https://stellar.lan.synchro.dev
+  no-tls-verify: true
+
+cloudflare_ipmi_service_config:
+  hostname: stellar-mgmt.synchro.dev
+  url: https://stellar.mgmt.synchro.dev
+  no-tls-verify: true

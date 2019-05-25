@@ -14,45 +14,6 @@
     tags: [bastion]
 
   - import_role:
-      name: cloudflared
-    vars:
-      service_suffix: dns
-      service_config: "{{ cloudflare_dns_service_config }}"
-    tags: [cloudflared,dnsproxy]
-
-  - import_role:
-      name: cloudflared
-    vars:
-      service_suffix: pihole
-      service_config: "{{ cloudflare_pihole_service_config }}"
-      service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argotunnel,argotunnel-pihole]
-
-  - import_role:
-      name: cloudflared
-    vars:
-      service_suffix: nas
-      service_config: "{{ cloudflare_nas_service_config }}"
-      service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argotunnel,argotunnel-nas]
-
-  - import_role:
-      name: cloudflared
-    vars:
-      service_suffix: plex
-      service_config: "{{ cloudflare_plex_service_config }}"
-      service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argotunnel,argotunnel-plex]
-
-  - import_role:
-      name: cloudflared
-    vars:
-      service_suffix: transmission
-      service_config: "{{ cloudflare_transmission_service_config }}"
-      service_systemd_after: cloudflared-dns.service
-    tags: [cloudflared,argotunnel,argotunnel-transmission]
-
-  - import_role:
       name: nfs_mount
     vars:
       mount_path: "{{ nfs_mount_path }}"
@@ -66,3 +27,83 @@
       download_path: "{{ transmission_download }}"
       settings: "{{ transmission_settings }}"
     tags: [transmission]
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: plex
+      service_config: "{{ cloudflare_plex_service_config }}"
+    tags: [cloudflared,argo,argo-plex]
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: transmission
+      service_config: "{{ cloudflare_transmission_service_config }}"
+    tags: [cloudflared,argo,argo-transmission]
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: freenas
+      service_config: "{{ cloudflare_freenas_service_config }}"
+    tags: [cloudflared,argo,argo-freenas]
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: esxi
+      service_config: "{{ cloudflare_esxi_service_config }}"
+    tags: [cloudflared,argo,argo-esxi]
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: ipmi
+      service_config: "{{ cloudflare_ipmi_service_config }}"
+    tags: [cloudflared,argo,argo-ipmi]
+
+- hosts: neptune
+  become: true
+  tasks:
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: dns
+      service_config: "{{ cloudflare_dns_service_config }}"
+    tags: [cloudflared,dnsproxy]
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: pihole
+      service_config: "{{ cloudflare_pihole_service_config }}"
+      service_systemd_after: cloudflared-dns.service
+    tags: [cloudflared,argo,argo-pihole]
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: powerdns
+      service_config: "{{ cloudflare_powerdns_service_config }}"
+    tags: [cloudflared,argo,argo-powerdns]
+
+- hosts: uranus
+  become: true
+  tasks:
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: dns
+      service_config: "{{ cloudflare_dns_service_config }}"
+    tags: [cloudflared,dnsproxy]
+    when: false
+
+  - import_role:
+      name: cloudflared
+    vars:
+      service_suffix: pihole
+      service_config: "{{ cloudflare_pihole_service_config }}"
+      service_systemd_after: cloudflared-dns.service
+    tags: [cloudflared,argo,argo-pihole]
+    when: false
